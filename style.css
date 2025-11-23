@@ -1,0 +1,98 @@
+/* Xtra Savers - "Smart Premium" Theme CSS */
+
+:root {
+    /* --- COLOR PALETTE --- */
+    /* Primary: A deep Slate Teal representing reliability and logistics */
+    --color-primary: #2A4B5C; 
+    /* Secondary/Accent: A muted Ochre Gold representing value and gifting */
+    --color-accent: #D4AF37; 
+    /* Accent Hover: Slightly darker gold for interactive elements */
+    --color-accent-hover: #B39229;
+    
+    /* Neutrals for Form Backgrounds and Text */
+    --color-bg-main: #F8F9FA; /* Very light gray background, easier on eyes than pure white */
+    --color-bg-card: #FFFFFF; /* Pure white for the form container itself */
+    --color-text-dark: #1A202C; /* Almost black for main text */
+    --color-text-muted: #718096; /* For helper text and labels */
+    --color-border-muted: #E2E8F0; /* Subtle borders for form fields */
+
+    /* --- TYPOGRAPHY --- */
+    /* Use a modern geometric sans for headers (import via Google Fonts) */
+    --font-header: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Use a highly legible utility sans for form inputs */
+    --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+    /* --- SPACING & SIZING --- */
+    --border-radius-soft: 8px; /* Makes the form feel friendly, not rigid */
+    --spacing-unit: 16px;
+}
+
+/* --- BASIC USAGE EXAMPLES --- */
+
+body {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-header);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* The main container for your intake form */
+.form-container {
+    background-color: var(--color-bg-card);
+    border-radius: var(--border-radius-soft);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: calc(var(--spacing-unit) * 2);
+    max-width: 800px;
+    margin: calc(var(--spacing-unit) * 4) auto;
+}
+
+/* Form Field Styling */
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--color-border-muted);
+    border-radius: var(--border-radius-soft);
+    font-family: var(--font-body);
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+/* Highlights the field when the user clicks into it */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* The Submit Button - The "Call to Action" */
+.submit-button {
+    background-color: var(--color-accent);
+    color: white;
+    font-family: var(--font-header);
+    font-weight: 600;
+    padding: 16px 32px;
+    border: none;
+    border-radius: var(--border-radius-soft);
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: var(--color-accent-hover);
+}

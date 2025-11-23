@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xtra Savers | Custom Kit Fulfillment</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // REPLACE WITH YOUR PUBLIC KEY
+            emailjs.init("YOUR_PUBLIC_KEY_HERE");
+        })();
+    </script>
+
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --color-primary: #2A4B5C; /* Slate Teal */
+            --color-accent: #D4AF37; /* Gold */
+            --color-accent-hover: #B39229;
+            --color-bg-main: #F8F9FA; 
+            --color-bg-card: #FFFFFF; 
+            --color-text-dark: #1A202C; 
+            --color-text-muted: #4A5568; 
+            --color-border: #E2E8F0; 
+            --max-width: 1100px;
+        }
+
+        /* --- RESET & TYPOGRAPHY --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--color-bg-main);
+            color: var(--color-text-dark);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-primary);
+        }
+
+        /* --- VIDEO HERO SECTION (NEW!) --- */
+        .hero {
+            position: relative;
+            /* background-color removed, video takes its place */
+            color: white;
+            /* Increased padding for a taller, more cinematic banner */
+            padding: 8rem 1rem; 
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* This ensures the video covers the whole area without stretching weirdly */
+            object-fit: cover; 
+            z-index: -2; /* Puts it at the very back */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* A semi-transparent layer using your brand color (Slate Teal at 80% opacity) so text is readable */
+            background: rgba(42, 75, 92, 0.8); 
+            z-index: -1; /* Puts it between video and text */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1; /* Ensures text and buttons are clickable on top */
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #E2E8F0;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            font-weight: 500;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-button:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-3px);
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            font-size: 2rem;
+        }
+
+        /* --- THEMES GRID --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .card h3 { margin-bottom: 0.5rem; }
+        .card p { color: var(--color-text-muted); font-size: 0.95rem; }
+        
+        .icon-box {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* --- PRICING & TIMELINE SECTION --- */
+        .info-section {
+            background-color: white;
+            margin-top: 4rem;
+            padding: 4rem 0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .price-badge {
+            background-color: #E6FFFA;
+            color: #2C7A7B;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-box {
+            border-left: 4px solid var(--color-accent);
+            padding-left: 1.5rem;
+            text-align: left;
+        }
+
+        /* --- FORM SECTION --- */
+        .form-wrapper {
+            max-width: 700px;
+            margin: 4rem auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid var(--color-primary);
+        }
+
+        .form-row { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .form-col { flex: 1; }
+        .form-group { margin-bottom: 1rem; }
+        
+        label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: var(--color-primary); }
+        
+        input, select, textarea {
+            width: 100%; padding: 12px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--color-primary);
+        }
+
+        .submit-button {
+            background-color: var(--color-primary);
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .submit-button:hover { opacity: 0.9; }
+
+        .helper { font-size: 0.85rem; color: var(--color-text-muted); margin-top: 4px; }
+        
+        #status-message { margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none; text-align: center; }
+        .status-success { background-color: #C6F6D5; color: #22543D; }
+        .status-error { background-color: #FED7D7; color: #822727; }
+
+        /* Mobile Tweaks */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .form-row { flex-direction: column; gap: 0; }
+            .form-wrapper { padding: 1.5rem; }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="Media\Packing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+            <h1>Corporate Gifting, Simplified.</h1>
+            <p>We handle the printing, packing, and shipping of premium custom kits so you can focus on your team.</p>
+            <a href="#start-quote" class="cta-button">Build Your Kit</a>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Popular Kit Themes</h2>
+        <div class="grid-3">
+            <div class="card">
+                <span class="icon-box">🚀</span>
+                <h3>New Hire Onboarding</h3>
+                <p>Welcome new talent with a branded hoodie, notebook, tumbler, and a personalized welcome letter.</p>
+            </div>
+            <div class="card">
+                <span class="icon-box">🎉</span>
+                <h3>Employee Appreciation</h3>
+                <p>Celebrate milestones and anniversaries with high-quality "Work From Home" survival kits.</p>
+            </div>
+            <div class="card">
+                <span class="icon-box">🛍️</span>
+                <h3>Event Swag Bags</h3>
+                <p>Conference or retreat coming up? We handle the bulk packing and deliver directly to the venue.</p>
+            </div>
+        </div>
+    </section>
+	
+	<section class="container" style="margin-top: 4rem;">
+        <h2 class="section-title">Build Your Kit</h2>
+        <p style="text-align:center; max-width:600px; margin:0 auto 3rem; color:#4A5568;">
+            Mix and match items to create the perfect box.
+        </p>
+
+        <div style="background:white; padding:2rem; border-radius:12px; border:1px solid #E2E8F0; margin-bottom:2rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap;">
+            <div style="flex:1;">
+                <h3 style="margin-bottom:0.5rem;">Step 1: The Foundation ($5.00)</h3>
+                <p style="color:#2A4B5C; font-weight:600;">Custom Box & Crinkle Fill [cite: 5]</p>
+                <ul style="margin-top:1rem; padding-left:1.2rem; color:#4A5568; font-size:0.95rem;">
+                    <li>High-gloss, 200lb test corrugated mailer[cite: 7].</li>
+                    <li>Secure tab locking closure (no tape needed)[cite: 8].</li>
+                    <li>Interlocking crinkle-cut paper in your brand colors[cite: 9].</li>
+                </ul>
+            </div>
+            <div style="background:#F7FAFC; padding:1.5rem; border-radius:8px; text-align:center; min-width:200px;">
+                <span style="font-size:2rem; display:block;">📦</span>
+                <span style="font-weight:700; color:#2A4B5C;">$5.00 Flat Fee [cite: 6]</span>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom:1.5rem; color:#2A4B5C;">Step 2: Premium Apparel [cite: 11]</h3>
+        <div class="grid-3" style="margin-bottom:3rem;">
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Unisex Jersey T-Shirt [cite: 14]</h4>
+                    <span class="price-badge" style="margin:0;">$14 [cite: 15]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">Lightweight (4.2 oz) and breathable. 100% combed ring-spun cotton with retail fit[cite: 16, 17].</p>
+            </div>
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Quarter-Zip Pullover [cite: 20]</h4>
+                    <span class="price-badge" style="margin:0;">$28 [cite: 20]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">100% polyester interlock with PosiCharge technology. Moisture-wicking and snag-resistant[cite: 21, 22].</p>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom:1.5rem; color:#2A4B5C;">Step 3: Essential Tech [cite: 25]</h3>
+        <div class="grid-3" style="margin-bottom:3rem;">
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Blackwater Speaker [cite: 28]</h4>
+                    <span class="price-badge" style="margin:0;">$23 [cite: 30]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">IPX6 waterproof rating. Compact 3" size with carabiner clip and 33ft Bluetooth range[cite: 31, 32, 33].</p>
+            </div>
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Wireless Charging Pad [cite: 35]</h4>
+                    <span class="price-badge" style="margin:0;">$15 [cite: 36]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">5W charging for iPhone/Android. Durable double-wall body with USB cable included[cite: 37, 38, 39].</p>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom:1.5rem; color:#2A4B5C;">Step 4: Finishing Touches [cite: 41]</h3>
+        <div class="grid-3">
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Sunsplash Tumbler [cite: 44]</h4>
+                    <span class="price-badge" style="margin:0;">$14 [cite: 45]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">16oz BPA-free acrylic. Includes matching lid and crack-resistant straw[cite: 44, 46, 49].</p>
+            </div>
+            <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Premium Notebooks [cite: 52]</h4>
+                    <span class="price-badge" style="margin:0;">$9 - $11 [cite: 56, 62]</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">Choose from Hardcover Matte ($11), Spiral ($10), or Softcover Satin ($9)[cite: 55, 58, 61].</p>
+            </div>
+             <div class="card" style="text-align:left;">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h4 style="margin:0;">Small Add-Ons</h4>
+                    <span class="price-badge" style="margin:0;">$6 - $8</span>
+                </div>
+                <p style="font-size:0.9rem; margin-top:1rem;">Ceramic Ornaments ($6) [cite: 68] or Custom Air Fresheners in 3 scents ($8)[cite: 71, 73].</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="container">
+            <div class="grid-3">
+                <div class="card timeline-box">
+                    <span class="price-badge">Most Popular</span>
+                    <h3>Standard Kit ($50 - $75)</h3>
+                    <p>Includes custom box, 2 premium items (e.g. Shirt + Mug), stickers, and crinkle fill.</p>
+                    <br>
+                    <h3>Premium Kit ($75 - $100)</h3>
+                    <p>Includes custom box, 3 premium items (e.g. Hoodie + Tumbler + Tech), and handwritten notes.</p>
+                </div>
+                
+                <div class="card timeline-box" style="border-left-color: var(--color-primary);">
+                    <h3>⏱️ The 14-Day Turnaround</h3>
+                    <p><strong>Days 1-3:</strong> Design approval & payment.</p>
+                    <p><strong>Days 4-10:</strong> Production (Printing items).</p>
+                    <p><strong>Days 11-14:</strong> Kitting, Assembly & Shipping.</p>
+                    <p class="helper"><em>*Rush orders available for a fee.</em></p>
+                </div>
+
+                <div class="card timeline-box" style="border-left-color: #38A169;">
+                    <h3>📦 How It Works</h3>
+                    <p>1. Fill out the form below.</p>
+                    <p>2. We send you a digital mockup & quote.</p>
+                    <p>3. You approve, we build, we ship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="start-quote">
+        <h2 class="section-title">Start Your Quote</h2>
+        <div class="form-wrapper">
+            <form id="inquiry-form">
+                
+                <div class="form-row">
+                    <div class="form-col form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="from_name" placeholder="Jane Doe" required>
+                    </div>
+                    <div class="form-col form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="from_email" placeholder="jane@company.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>I am ordering for...</label>
+                    <select name="client_type" required>
+                        <option value="" disabled selected>Select one...</option>
+                        <option value="Business">My Company (Employee/Client Gifts)</option>
+                        <option value="Personal">Personal (Event/Birthday)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" min="10" placeholder="Min. 10 Kits" required>
+                    </div>
+                    <div class="form-col form-group">
+                        <label>Date Needed</label>
+                        <input type="date" id="target_date" name="target_date" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col form-group">
+                        <label>Box Theme</label>
+                        <select name="theme" required>
+                            <option value="New Hire">New Hire Onboarding</option>
+                            <option value="Appreciation">Employee Appreciation</option>
+                            <option value="Event">Conference/Event Swag</option>
+                            <option value="Custom">Something Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-col form-group">
+                        <label>Budget Per Kit</label>
+                        <select name="budget" required>
+                            <option value="$50-$75">Standard ($50 - $75)</option>
+                            <option value="$75-$100">Premium ($75 - $100)</option>
+                            <option value="$100+">Luxury ($100+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tell us about your project</label>
+                    <textarea name="message" rows="4" placeholder="Specific items needed? (e.g. Hoodies, Tumblers)"></textarea>
+                </div>
+
+                <button type="submit" class="submit-button" id="submit-btn">Request Quote</button>
+                <div id="status-message"></div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Xtra Savers Fulfillment. Madison, IN.</p>
+		<a href="admin.html">Admin</a>
+    </footer>
+
+    <script>
+        // 1. Set Minimum Date (14 Days from today)
+        const dateInput = document.getElementById('target_date');
+        const today = new Date();
+        today.setDate(today.getDate() + 14); // Add 14 days
+        dateInput.setAttribute('min', today.toISOString().split('T')[0]);
+
+        // 2. Handle Submission
+        document.getElementById('inquiry-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('submit-btn');
+            const statusDiv = document.getElementById('status-message');
+            
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+            statusDiv.style.display = 'none';
+
+            // REPLACE IDS HERE
+            const serviceID = 'service_s5fm9sd'; 
+            const adminTemplateID = 'template_20ufznc';
+            const customerTemplateID = 'template_ilgfz6e';
+
+            const sendAdmin = emailjs.sendForm(serviceID, adminTemplateID, this);
+            const sendCustomer = emailjs.sendForm(serviceID, customerTemplateID, this);
+
+            Promise.all([sendAdmin, sendCustomer])
+                .then(() => {
+                    btn.innerText = 'Request Quote';
+                    btn.disabled = false;
+                    statusDiv.innerText = "Success! Check your email for confirmation.";
+                    statusDiv.className = "status-success";
+                    statusDiv.style.display = 'block';
+                    document.getElementById('inquiry-form').reset();
+                }, (err) => {
+                    btn.innerText = 'Try Again';
+                    btn.disabled = false;
+                    statusDiv.innerText = "Error sending. Please email us directly.";
+                    statusDiv.className = "status-error";
+                    statusDiv.style.display = 'block';
+                    console.error(err);
+                });
+        });
+    </script>
+</body>
+</html>
